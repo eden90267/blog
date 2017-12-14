@@ -8,7 +8,6 @@ import actions from "Source/actions";
 import {connect} from "react-redux";
 
 
-
 const mapStateToProps = (state) => {
   return {
     service: state.service,
@@ -26,7 +25,7 @@ class Entry extends Component {
     return (
       <div className="one column row">
         <div className="column">
-          <Link to={'/blog' + this.props.id} style={linkStyle}>
+          <Link to={'/blog/' + this.props.id} style={linkStyle}>
             <h1>{this.props.title}</h1>
             <p>{this.props.content}</p>
           </Link>
@@ -59,13 +58,21 @@ class Blog extends Component {
   };
 
   render() {
-    var entry, status;
-    if (this.state.blog) {
-      status = this.state.blog.status;
-    }
+    var entry = this.state.blog.entries.map((value, index) => {
+      if (value) {
+        return (
+          <Entry
+            id={value._id}
+            title={value.title}
+            content={value.content}
+            updated={value.updated}
+            key={index}/>
+        )
+      }
+    })
     return (
       <div>
-        <Header serviceName={'React'} />
+        <Header serviceName={this.state.serviceName}/>
 
         <section className="ui basic vertical segment blog-header">
           <div className="ui container">
@@ -86,13 +93,13 @@ class Blog extends Component {
                   <div className="ui vertically divided grid">
                     {entry}
                   </div>
-                  <BlogWriter />
+                  <BlogWriter/>
                 </div>
               </div>
 
               <div className="one column mobile only row">
                 <div className="column">
-                  <BlogWriter />
+                  <BlogWriter/>
                 </div>
               </div>
             </div>

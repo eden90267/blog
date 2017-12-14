@@ -1,10 +1,30 @@
 import React, {Component} from "react";
 import ReactDOM from 'react-dom';
+import actions from "Source/actions";
+import {connect} from "react-redux";
+
+const mapStateToProps = (state) => {
+  return {
+    service: state.service
+  };
+};
 
 class BlogWriter extends Component {
   submit = () => {
     var title = this.refs.title.value;
     var content = this.refs.content.value;
+
+    var conditions = {
+      title,
+      content
+    };
+
+    if (title === '') {
+      return;
+    }
+    this.props.dispatch(actions.blog.createEntry(conditions));
+    this.refs.title.value = '';
+    this.refs.content.value = '';
   };
 
   render() {
@@ -27,4 +47,4 @@ class BlogWriter extends Component {
   }
 }
 
-export default BlogWriter;
+export default connect(mapStateToProps)(BlogWriter);
