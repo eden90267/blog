@@ -9,6 +9,6 @@ const getService = () => {
   }
 };
 
-export {
+export default {
   getService
 };

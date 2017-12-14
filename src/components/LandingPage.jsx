@@ -1,17 +1,40 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import actions from 'Source/actions';
+
 import Header from "Source/components/Header";
 import Footer from "Source/components/Footer";
 import Design from "Source/components/Design";
 import Coding from "Source/components/Coding";
 import Middle from "Source/components/Middle";
 import Service from "Source/components/Service";
+import {connect} from "react-redux";
+
+const mapStateToProps = (state) => {
+  return {
+    service: state.service
+  };
+};
 
 class LandingPage extends React.Component {
   constructor(props, context) {
     super(props, context);
+
+    this.state = {
+      serviceName: props.service.serviceName
+    };
   }
+
+  componentWillMount() {
+    var service = this.props.dispatch(actions.service.getService()); // 透過 Redux 的 dispatch，呼叫 action 裡面的函數 getService
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    this.setState({
+      serviceName: nextProps.service.serviceName
+    });
+  };
 
   design = () => {
     var $node = $(this.refs.app_selection);
@@ -43,7 +66,7 @@ class LandingPage extends React.Component {
 
     return (
       <div>
-        <Header serviceName={'React'} ref="header" service={this.service}/>
+        <Header serviceName={this.state.serviceName} ref="header" service={this.service}/>
 
         <section className="ui basic vertical segment header">
           <div className="ui container">
@@ -77,10 +100,10 @@ class LandingPage extends React.Component {
           <Service/>
         </section>
 
-        <Footer serviceName={this.props.serviceName}/>
+        <Footer serviceName={this.state.serviceName}/>
       </div>
     );
   }
 }
 
-export default LandingPage;
+export default connect(mapStateToProps)(LandingPage);
