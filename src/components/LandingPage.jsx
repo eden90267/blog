@@ -43,7 +43,7 @@ class LandingPage extends React.Component {
 
     return (
       <div>
-        <Header serviceName={this.props.serviceName} ref="header" service={this.service}/>
+        <Header serviceName={'React'} ref="header" service={this.service}/>
 
         <section className="ui basic vertical segment header">
           <div className="ui container">

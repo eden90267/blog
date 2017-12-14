@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 class Header extends React.Component {
   constructor(props, context) {
@@ -11,10 +12,19 @@ class Header extends React.Component {
   };
 
   render() {
+    var transparentStyle = {
+      background: 'transparent',
+      border: 0,
+      boxShadow: 'none'
+    };
+    var cursorStyle = {
+      cursor: 'pointer'
+    };
+
     var Items = (
-        <div className={'item'} onClick={this.props.service}>
-          Service
-        </div>
+        <Link to="/blog" className={'item'} style={cursorStyle}>
+          Blog
+        </Link>
     );
 
     return (
@@ -23,9 +33,9 @@ class Header extends React.Component {
             <div className="column">
               <div className={'ui top fixed menu'}>
                 <div className={'left menu'}>
-                  <div className={'item'}>
+                  <Link to="/" className={'item'} style={cursorStyle}>
                     <strong>{this.props.serviceName}</strong>
-                  </div>
+                  </Link>
                   {Items}
                 </div>
               </div>
